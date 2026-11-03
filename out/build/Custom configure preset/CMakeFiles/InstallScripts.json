@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/cmake_install.cmake",
+		"/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/glad/cmake_install.cmake",
+		"/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/glm/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
