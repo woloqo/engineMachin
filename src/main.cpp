@@ -1,4 +1,7 @@
 #include<bits/stdc++.h>
+#include<string>
+#include<iostream>
+
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 #include<glm/glm.hpp>
@@ -11,10 +14,16 @@
 #include"../include/EBO.h"
 #include"../include/colors.h"
 #include"../include/textures.h"
+#include"../include/TextRenderer.h"
 
-const char *defaultVertPath = "/home/woloqo/Documents/vscode/openMachin/engineMachin/resources/shaders/default.vert";
-const char *defaultFragPath = "/home/woloqo/Documents/vscode/openMachin/engineMachin/resources/shaders/default.frag";
-const char *grassTextPath = "/home/woloqo/Documents/vscode/openMachin/engineMachin/resources/textures/grass_side.png";
+const char *defaultVertPath = RES_PATH "/shaders/default.vert";
+const char *defaultFragPath = RES_PATH "/shaders/default.frag";
+
+const char *textVertPath = RES_PATH "/shaders/text.vert";
+const char *textFragPath = RES_PATH "/shaders/text.frag";
+
+const char *grassTextPath 	= RES_PATH "/textures/grass_side.png";
+const char *fontPath     	= RES_PATH "/fonts/minecraft_font.ttf";
 
 const char *windowTitle = "engineMachin";
 int windowWidth  = 800;
@@ -100,6 +109,7 @@ int main(){
 	} else std::cout<<"Ventana creada correctamente\n";
 
 	glfwMakeContextCurrent(window);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	gladLoadGL();
 	glViewport(0, 0, 800, 800);
@@ -126,8 +136,16 @@ int main(){
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	TextRenderer text(textVertPath, textFragPath);
+	if (!text.Load(fontPath, 48)) return -1;
+
+	double lastTime = glfwGetTime();
+	int frames = 0;
+	std::string fpsText = std::to_string(frames) + " FPS (" + std::to_string(1000.0 / frames).substr(0, 4) + " ms)";
+
 	// Main loop
 	while (!glfwWindowShouldClose(window)){
+
 		processInput(window);
 
 		glClearColor(COLOR_WHITE);
@@ -139,6 +157,9 @@ int main(){
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4  view = glm::mat4(1.0f);
 		glm::mat4  proj = glm::mat4(1.0f);
+
+		VAO1.Bind();
+		grassTexture.bind();
 
 		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
@@ -155,8 +176,16 @@ int main(){
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		VAO1.Bind();
-		grassTexture.bind();
+		double currentTime = glfwGetTime();
+		frames++;
+		if(currentTime - lastTime >= 0.5){
+			fpsText = std::to_string(frames) + " FPS (" + std::to_string(1000.0 / frames).substr(0, 4) + " ms)";
+			frames = 0;
+			lastTime += 1;
+		}
+		
+		text.Draw(fpsText, 10.0f, windowHeight - 25.0f, 0.4f,
+		glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -165,6 +194,10 @@ int main(){
 	VAO1.Delete();
 	VBO1.Delete();
 	//EBO1.Delete();
+
+	grassTexture.Delete();
+	text.Delete();
+
 	shaderProgram.Delete();
 
 	glfwDestroyWindow(window);

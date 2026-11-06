@@ -4,6 +4,8 @@ project(engineMachin)
 add_subdirectory(glad)
 add_subdirectory(glm)
 
+find_package(Freetype REQUIRED)
+
 set(HEADERS 
     "${CMAKE_CURRENT_SOURCE_DIR}/include/shaderClass.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/VAO.h"
@@ -12,6 +14,7 @@ set(HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/include/colors.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/stb_image.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/textures.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/TextRenderer.h"
 )
 
 set(SOURCE
@@ -22,11 +25,15 @@ set(SOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/EBO.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/stb_image.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/textures.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/TextRenderer.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE} ${HEADERS})
 
+target_compile_definitions(${PROJECT_NAME} PRIVATE RES_PATH="${CMAKE_SOURCE_DIR}/resources/")
+
 target_link_libraries(${PROJECT_NAME}
     glfw
     glad
+    Freetype::Freetype
 )

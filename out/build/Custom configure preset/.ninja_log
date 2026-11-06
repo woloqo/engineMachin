@@ -1,11 +1,14 @@
 # ninja log v7
-1	27	1793690352607280057	CMakeFiles/engineMachin.dir/src/EBO.cpp.o	2f0ee11fca9d1675
-1	27	1793690352607168445	CMakeFiles/engineMachin.dir/src/VBO.cpp.o	1b35144ac7487bba
-1	30	1793690352607021212	CMakeFiles/engineMachin.dir/src/VAO.cpp.o	dff552825b837bcb
+2	28	1793954739112553037	CMakeFiles/engineMachin.dir/src/EBO.cpp.o	208b32ac74b970d6
+2	28	1793954739112421274	CMakeFiles/engineMachin.dir/src/VBO.cpp.o	efc80cb1cf82c59b
+2	28	1793954739112266957	CMakeFiles/engineMachin.dir/src/VAO.cpp.o	12f4f3add7b56f26
 0	70	1793690352604509099	glad/CMakeFiles/glad.dir/src/glad.c.o	ef13e67ba8d33910
 70	101	1793690352674511874	glad/libglad.a	493cb8a7860a8b41
-2	328	1793690438013182402	CMakeFiles/engineMachin.dir/src/shaderClass.cpp.o	54a4e7758e91e870
-1	540	1793690352607440351	CMakeFiles/engineMachin.dir/src/stb_image.cpp.o	89a24f904ee50c96
-2	1329	1793690352607587584	CMakeFiles/engineMachin.dir/src/textures.cpp.o	77c26084aa4d7c38
-2	1303	1793690438011954629	CMakeFiles/engineMachin.dir/src/main.cpp.o	de065c2ebfe39b5a
-1303	1351	1793690439312825565	engineMachin	f23c9a00ac91c842
+2	335	1793954739112118575	CMakeFiles/engineMachin.dir/src/shaderClass.cpp.o	a2fb04a369eaf776
+3	476	1793954739112690735	CMakeFiles/engineMachin.dir/src/stb_image.cpp.o	ffdb4994d78b3109
+3	1170	1793954739112880664	CMakeFiles/engineMachin.dir/src/textures.cpp.o	720d74d3bd2b2e78
+2	1382	1793955963595962575	CMakeFiles/engineMachin.dir/src/main.cpp.o	3b3da2ba570e0441
+1382	1434	1793955964975965530	engineMachin	e7652efaac3a2475
+2	619	1793955575327188849	CMakeFiles/engineMachin.dir/src/TextRenderer.cpp.o	6c833e2242052c0d
+2	1326	1793955971152977135	CMakeFiles/engineMachin.dir/src/main.cpp.o	3b3da2ba570e0441
+1326	1379	1793955972476979289	engineMachin	e7652efaac3a2475
