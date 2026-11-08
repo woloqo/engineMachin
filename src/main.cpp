@@ -33,8 +33,13 @@ int windowWidth 		= 800;
 int windowHeight 		= 800;
 
 bool isDebugActive 		= true;
+bool firstMouse 		= true;
+bool constrainPitch		= true;
 
 float deltaTime 		= 0.0f;
+float lastX = windowWidth/2, lastY = windowHeight/2;
+
+Camera camera = Camera(glm::vec3(5.0f, 0.0f, 0.0f));
 
 float vertices[] = {
     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -102,7 +107,38 @@ void processInput(GLFWwindow *w, Camera *c){
 	if(glfwGetKey(w, GLFW_KEY_S) == GLFW_PRESS) c->position -= c->speed * c->front * deltaTime;
 	if(glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS) c->position += glm::normalize(glm::cross(c->front, c->up)) * c->speed * deltaTime;
 	if(glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS) c->position -= glm::normalize(glm::cross(c->front, c->up)) * c->speed * deltaTime;
+	if(glfwGetKey(w, GLFW_KEY_SPACE) == GLFW_PRESS) c->position.y += c->speed * deltaTime;
+	if(glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) c->position.y -= c->speed * deltaTime;
 }
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos){
+    if (firstMouse){
+        lastX = 0;
+        lastY = 0;
+        firstMouse = false;
+    }
+  
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; 
+    lastX = xpos;
+    lastY = ypos;
+
+    float sensitivity = 0.1f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    camera.yaw   += xoffset;
+    camera.pitch += yoffset;
+
+    if(camera.pitch > 89.0f) camera.pitch = 89.0f;
+    if(camera.pitch < -89.0f) camera.pitch = -89.0f;
+
+    glm::vec3 direction;
+    direction.x = cos(glm::radians(camera.yaw)) * cos(glm::radians(camera.pitch));
+    direction.y = sin(glm::radians(camera.pitch));
+    direction.z = sin(glm::radians(camera.yaw)) * cos(glm::radians(camera.pitch));
+    camera.front = glm::normalize(direction);
+}  
 
 void framebuffer_size_callback(GLFWwindow *w, int width, int height){
 	windowWidth = width;
@@ -125,6 +161,7 @@ int main(){
 		return -1;
 	} else std::cout<<"Ventana creada correctamente\n";
 
+	//Window settings
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSwapInterval( 0 );
@@ -132,6 +169,10 @@ int main(){
 	gladLoadGL();
 	glViewport(0, 0, 800, 800);
 	glEnable(GL_DEPTH_TEST); 
+
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
+	glfwSetKeyCallback(window, key_callback);
+	glfwSetCursorPosCallback(window, mouse_callback); 
 
 	Shader shaderProgram(defaultVertPath, defaultFragPath);
 
@@ -162,11 +203,6 @@ int main(){
 	int frames = 0;
 	std::string fpsText = std::to_string(frames) + " FPS (" + std::to_string(1000.0 / frames).substr(0, 4) + " ms)";
 
-	// -------- CAMERA -----------
-	Camera camera = Camera(glm::vec3(5.0f, 0.0f, 5.0f));
-
-	glfwSetKeyCallback(window, key_callback);
-
 	// Main loop
 	while (!glfwWindowShouldClose(window)){
 		glClearColor(COLOR_WHITE);
@@ -183,7 +219,7 @@ int main(){
 		VAO1.Bind();
 		grassTexture.bind();
 
-		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
+		//model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
 		camera.view = glm::lookAt(camera.position, camera.position + camera.front, camera.up);
 		proj = glm::perspective(glm::radians(45.0f), float(windowWidth/windowHeight), 0.1f, 100.0f);
 
@@ -212,8 +248,12 @@ int main(){
 		
 		if(isDebugActive){
 			text.Draw(fpsText, 10.0f, windowHeight - 25.0f, 0.4f, glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);
+
 			std::string cameraText = "Camera pos: " + std::format("{:.2f}", camera.position.x) + ", " + std::format("{:.2f}", camera.position.y) + ", " + std::format("{:.2f}", camera.position.z);
 			text.Draw(cameraText, 10.0f, windowHeight - 45.0f, 0.4f, glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);
+
+			std::string viewText = "(looking at : " + std::format("{:.2f}", camera.front.x) + ", " + std::format("{:.2f}", camera.front.y) + ", " + std::format("{:.2f}", camera.front.z) + ")";
+			text.Draw(viewText, 5.0f, windowHeight - 65.0f, 0.35f, glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);
 		}
 
 		glfwSwapBuffers(window);
