@@ -129,6 +129,16 @@ build CMakeFiles/engineMachin.dir/src/TextRenderer.cpp.o: CXX_COMPILER__engineMa
   OBJECT_FILE_DIR = CMakeFiles/engineMachin.dir/src
   TARGET_SUPPORT_DIR = CMakeFiles/engineMachin.dir
 
+build CMakeFiles/engineMachin.dir/src/camera.cpp.o: CXX_COMPILER__engineMachin_unscanned_Debug /home/woloqo/Documents/vscode/openMachin/engineMachin/src/camera.cpp || cmake_object_order_depends_target_engineMachin
+  CONFIG = Debug
+  DEFINES = -DRES_PATH=\"/home/woloqo/Documents/vscode/openMachin/engineMachin/resources/\"
+  DEP_FILE = CMakeFiles/engineMachin.dir/src/camera.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -I/home/woloqo/Documents/vscode/openMachin/engineMachin/glad/./include -isystem /usr/include/freetype2
+  OBJECT_DIR = CMakeFiles/engineMachin.dir
+  OBJECT_FILE_DIR = CMakeFiles/engineMachin.dir/src
+  TARGET_SUPPORT_DIR = CMakeFiles/engineMachin.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target engineMachin
@@ -137,7 +147,7 @@ build CMakeFiles/engineMachin.dir/src/TextRenderer.cpp.o: CXX_COMPILER__engineMa
 #############################################
 # Link the executable engineMachin
 
-build engineMachin: CXX_EXECUTABLE_LINKER__engineMachin_Debug CMakeFiles/engineMachin.dir/src/main.cpp.o CMakeFiles/engineMachin.dir/src/shaderClass.cpp.o CMakeFiles/engineMachin.dir/src/VAO.cpp.o CMakeFiles/engineMachin.dir/src/VBO.cpp.o CMakeFiles/engineMachin.dir/src/EBO.cpp.o CMakeFiles/engineMachin.dir/src/stb_image.cpp.o CMakeFiles/engineMachin.dir/src/textures.cpp.o CMakeFiles/engineMachin.dir/src/TextRenderer.cpp.o | glad/libglad.a /usr/lib/libfreetype.so || glad/libglad.a
+build engineMachin: CXX_EXECUTABLE_LINKER__engineMachin_Debug CMakeFiles/engineMachin.dir/src/main.cpp.o CMakeFiles/engineMachin.dir/src/shaderClass.cpp.o CMakeFiles/engineMachin.dir/src/VAO.cpp.o CMakeFiles/engineMachin.dir/src/VBO.cpp.o CMakeFiles/engineMachin.dir/src/EBO.cpp.o CMakeFiles/engineMachin.dir/src/stb_image.cpp.o CMakeFiles/engineMachin.dir/src/textures.cpp.o CMakeFiles/engineMachin.dir/src/TextRenderer.cpp.o CMakeFiles/engineMachin.dir/src/camera.cpp.o | glad/libglad.a /usr/lib/libfreetype.so || glad/libglad.a
   CONFIG = Debug
   DEP_FILE = CMakeFiles/engineMachin.dir/link.d
   FLAGS = -g

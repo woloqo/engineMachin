@@ -4,11 +4,10 @@
 2	28	1793954739112266957	CMakeFiles/engineMachin.dir/src/VAO.cpp.o	12f4f3add7b56f26
 0	70	1793690352604509099	glad/CMakeFiles/glad.dir/src/glad.c.o	ef13e67ba8d33910
 70	101	1793690352674511874	glad/libglad.a	493cb8a7860a8b41
-2	335	1793954739112118575	CMakeFiles/engineMachin.dir/src/shaderClass.cpp.o	a2fb04a369eaf776
+6	386	1794101564261571921	CMakeFiles/engineMachin.dir/src/shaderClass.cpp.o	a2fb04a369eaf776
 3	476	1793954739112690735	CMakeFiles/engineMachin.dir/src/stb_image.cpp.o	ffdb4994d78b3109
 3	1170	1793954739112880664	CMakeFiles/engineMachin.dir/src/textures.cpp.o	720d74d3bd2b2e78
-2	1382	1793955963595962575	CMakeFiles/engineMachin.dir/src/main.cpp.o	3b3da2ba570e0441
-1382	1434	1793955964975965530	engineMachin	e7652efaac3a2475
-2	619	1793955575327188849	CMakeFiles/engineMachin.dir/src/TextRenderer.cpp.o	6c833e2242052c0d
-2	1326	1793955971152977135	CMakeFiles/engineMachin.dir/src/main.cpp.o	3b3da2ba570e0441
-1326	1379	1793955972476979289	engineMachin	e7652efaac3a2475
+2	1496	1794104726195323805	CMakeFiles/engineMachin.dir/src/main.cpp.o	3b3da2ba570e0441
+1496	1551	1794104727689339050	engineMachin	d4208e50f64d26a9
+6	629	1794101564261733397	CMakeFiles/engineMachin.dir/src/TextRenderer.cpp.o	6c833e2242052c0d
+2	532	1794104059226553841	CMakeFiles/engineMachin.dir/src/camera.cpp.o	d25793140a4f851f

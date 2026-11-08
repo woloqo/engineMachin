@@ -15,6 +15,7 @@ set(HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/include/stb_image.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/textures.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/TextRenderer.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/camera.h"
 )
 
 set(SOURCE
@@ -26,6 +27,7 @@ set(SOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/stb_image.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/textures.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/TextRenderer.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/camera.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE} ${HEADERS})

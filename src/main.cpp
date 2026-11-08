@@ -1,4 +1,3 @@
-#include<bits/stdc++.h>
 #include<string>
 #include<iostream>
 
@@ -15,6 +14,7 @@
 #include"../include/colors.h"
 #include"../include/textures.h"
 #include"../include/TextRenderer.h"
+#include"../include/camera.h"
 
 const char *defaultVertPath = RES_PATH "/shaders/default.vert";
 const char *defaultFragPath = RES_PATH "/shaders/default.frag";
@@ -25,9 +25,14 @@ const char *textFragPath = RES_PATH "/shaders/text.frag";
 const char *grassTextPath 	= RES_PATH "/textures/grass_side.png";
 const char *fontPath     	= RES_PATH "/fonts/minecraft_font.ttf";
 
+//Variables del programa
+
 const char *windowTitle = "engineMachin";
-int windowWidth  = 800;
-int windowHeight = 800;
+
+int windowWidth 		= 800;
+int windowHeight 		= 800;
+
+bool isDebugActive 		= true;
 
 float vertices[] = {
     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -73,17 +78,20 @@ float vertices[] = {
     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 
-
-
 unsigned int indices[] = {
 	0, 1, 2,
 	0, 3, 2	
 };
 
-void processInput(GLFWwindow *w){
+void processInput(GLFWwindow *w, int key, int scancode, int action, int mods){
 	if(glfwGetKey(w, GLFW_KEY_ESCAPE) == GLFW_PRESS){
 		std::cout<<"Tecla [esc] presionada... Cerrando ventana\n";
 		glfwSetWindowShouldClose(w, true);
+	}
+	if (key == GLFW_KEY_F1 && action == GLFW_RELEASE){
+		std::cout<<"Debug toggled\n";
+		isDebugActive = isDebugActive ? 0 : 1;
+		glfwWaitEventsTimeout(0.7);
 	}
 }
 
@@ -110,6 +118,7 @@ int main(){
 
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSwapInterval( 0 );
 
 	gladLoadGL();
 	glViewport(0, 0, 800, 800);
@@ -143,11 +152,13 @@ int main(){
 	int frames = 0;
 	std::string fpsText = std::to_string(frames) + " FPS (" + std::to_string(1000.0 / frames).substr(0, 4) + " ms)";
 
+	// -------- CAMERA -----------
+	Camera camera = Camera(glm::vec3(5.0f, 0.0f, 5.0f));
+
+	glfwSetKeyCallback(window, processInput);
+
 	// Main loop
 	while (!glfwWindowShouldClose(window)){
-
-		processInput(window);
-
 		glClearColor(COLOR_WHITE);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -155,21 +166,20 @@ int main(){
 
 		//Transformaciones
 		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4  view = glm::mat4(1.0f);
 		glm::mat4  proj = glm::mat4(1.0f);
 
 		VAO1.Bind();
 		grassTexture.bind();
 
 		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
+		camera.view = glm::lookAt(camera.position, camera.position + camera.front, camera.up);
 		proj = glm::perspective(glm::radians(45.0f), float(windowWidth/windowHeight), 0.1f, 100.0f);
 
 		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
 		int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera.view));
 
 		int projLoc = glGetUniformLocation(shaderProgram.ID, "proj");
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
@@ -184,8 +194,11 @@ int main(){
 			lastTime += 1;
 		}
 		
-		text.Draw(fpsText, 10.0f, windowHeight - 25.0f, 0.4f,
-		glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);
+		if(isDebugActive){
+			text.Draw(fpsText, 10.0f, windowHeight - 25.0f, 0.4f, glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);
+			std::string cameraText = "Camera pos: " + std::format("{:.2f}", camera.position.x) + ", " + std::format("{:.2f}", camera.position.y) + ", " + std::format("{:.2f}", camera.position.z);
+			text.Draw(cameraText, 10.0f, windowHeight - 45.0f, 0.4f, glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);
+		}
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
