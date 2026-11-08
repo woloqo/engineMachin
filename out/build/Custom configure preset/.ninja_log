@@ -7,7 +7,9 @@
 6	386	1794101564261571921	CMakeFiles/engineMachin.dir/src/shaderClass.cpp.o	a2fb04a369eaf776
 3	476	1793954739112690735	CMakeFiles/engineMachin.dir/src/stb_image.cpp.o	ffdb4994d78b3109
 3	1170	1793954739112880664	CMakeFiles/engineMachin.dir/src/textures.cpp.o	720d74d3bd2b2e78
-2	1496	1794104726195323805	CMakeFiles/engineMachin.dir/src/main.cpp.o	3b3da2ba570e0441
-1496	1551	1794104727689339050	engineMachin	d4208e50f64d26a9
+2	1589	1794105954239740483	CMakeFiles/engineMachin.dir/src/main.cpp.o	3b3da2ba570e0441
+378	435	1794105966932541540	engineMachin	d4208e50f64d26a9
 6	629	1794101564261733397	CMakeFiles/engineMachin.dir/src/TextRenderer.cpp.o	6c833e2242052c0d
-2	532	1794104059226553841	CMakeFiles/engineMachin.dir/src/camera.cpp.o	d25793140a4f851f
+2	378	1794105966555864741	CMakeFiles/engineMachin.dir/src/camera.cpp.o	d25793140a4f851f
+2	392	1794105972676926496	CMakeFiles/engineMachin.dir/src/camera.cpp.o	d25793140a4f851f
+392	447	1794105973067915075	engineMachin	d4208e50f64d26a9

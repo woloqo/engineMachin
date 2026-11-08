@@ -1,13 +1,8 @@
 #include "../include/camera.h"
 
-#include <glad/glad.h>
-
-#include <string>
-#include <iostream>
-#include<glm/glm.hpp>
-
 Camera::Camera(glm::vec3 position){
     this->position  = position;
+    this->speed     = 5.0f;
     this->target    = glm::vec3(0.0f, 0.0f, 0.0f);
     
     this->view      = glm::mat4(1.0f);

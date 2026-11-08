@@ -34,6 +34,8 @@ int windowHeight 		= 800;
 
 bool isDebugActive 		= true;
 
+float deltaTime 		= 0.0f;
+
 float vertices[] = {
     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
      0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -83,16 +85,23 @@ unsigned int indices[] = {
 	0, 3, 2	
 };
 
-void processInput(GLFWwindow *w, int key, int scancode, int action, int mods){
-	if(glfwGetKey(w, GLFW_KEY_ESCAPE) == GLFW_PRESS){
+void key_callback(GLFWwindow *w, int key, int scancode, int action, int mods){
+	if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE){
 		std::cout<<"Tecla [esc] presionada... Cerrando ventana\n";
 		glfwSetWindowShouldClose(w, true);
 	}
-	if (key == GLFW_KEY_F1 && action == GLFW_RELEASE){
+	if(key == GLFW_KEY_F1 && action == GLFW_RELEASE){
 		std::cout<<"Debug toggled\n";
 		isDebugActive = isDebugActive ? 0 : 1;
 		glfwWaitEventsTimeout(0.7);
 	}
+}
+
+void processInput(GLFWwindow *w, Camera *c){
+	if(glfwGetKey(w, GLFW_KEY_W) == GLFW_PRESS) c->position += c->speed * c->front * deltaTime;
+	if(glfwGetKey(w, GLFW_KEY_S) == GLFW_PRESS) c->position -= c->speed * c->front * deltaTime;
+	if(glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS) c->position += glm::normalize(glm::cross(c->front, c->up)) * c->speed * deltaTime;
+	if(glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS) c->position -= glm::normalize(glm::cross(c->front, c->up)) * c->speed * deltaTime;
 }
 
 void framebuffer_size_callback(GLFWwindow *w, int width, int height){
@@ -149,13 +158,14 @@ int main(){
 	if (!text.Load(fontPath, 48)) return -1;
 
 	double lastTime = glfwGetTime();
+	float lastFrame = 0.0f;
 	int frames = 0;
 	std::string fpsText = std::to_string(frames) + " FPS (" + std::to_string(1000.0 / frames).substr(0, 4) + " ms)";
 
 	// -------- CAMERA -----------
 	Camera camera = Camera(glm::vec3(5.0f, 0.0f, 5.0f));
 
-	glfwSetKeyCallback(window, processInput);
+	glfwSetKeyCallback(window, key_callback);
 
 	// Main loop
 	while (!glfwWindowShouldClose(window)){
@@ -163,6 +173,8 @@ int main(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shaderProgram.use();
+
+		processInput(window, &camera);
 
 		//Transformaciones
 		glm::mat4 model = glm::mat4(1.0f);
@@ -193,6 +205,10 @@ int main(){
 			frames = 0;
 			lastTime += 1;
 		}
+
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;  
 		
 		if(isDebugActive){
 			text.Draw(fpsText, 10.0f, windowHeight - 25.0f, 0.4f, glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);

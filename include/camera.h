@@ -18,12 +18,9 @@ public:
 
     glm::mat4 view;
     
-    float x;
-    float y;
-    float z;
+    float speed;
 
     Camera(glm::vec3 position);
-
 };
 
 #endif
