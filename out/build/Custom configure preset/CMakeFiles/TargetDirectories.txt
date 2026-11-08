@@ -1,8 +1,0 @@
-/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/CMakeFiles/engineMachin.dir
-/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/CMakeFiles/edit_cache.dir
-/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/CMakeFiles/rebuild_cache.dir
-/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/glad/CMakeFiles/glad.dir
-/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/glad/CMakeFiles/edit_cache.dir
-/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/glad/CMakeFiles/rebuild_cache.dir
-/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/glm/CMakeFiles/edit_cache.dir
-/home/woloqo/Documents/vscode/openMachin/engineMachin/out/build/Custom configure preset/glm/CMakeFiles/rebuild_cache.dir
