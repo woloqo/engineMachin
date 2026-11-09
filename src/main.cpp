@@ -43,7 +43,7 @@ bool constrainPitch		= true;
 float deltaTime 		= 0.0f;
 float lastX = windowWidth/2, lastY = windowHeight/2;
 
-Camera camera = Camera(glm::vec3(5.0f, 0.0f, 0.0f));
+Camera camera = Camera(glm::vec3(12.0f, 2.0f, 0.5f));
 
 void key_callback(GLFWwindow *w, int key, int scancode, int action, int mods){
 	if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE){
@@ -133,7 +133,16 @@ int main(){
 
 	std::vector<float> vertices;
   	std::vector<unsigned int> indices;
-  	addCube(vertices, indices, {0, 0, 0}, GRASS);
+  	addCube(vertices, indices, {0, 1, -1}, GRASS);
+	addCube(vertices, indices, {0, 1,  1}, GRASS);
+	addCube(vertices, indices, {0, 2, -1}, GRASS);
+	addCube(vertices, indices, {0, 2,  1}, GRASS);
+
+	addCube(vertices, indices, {0, -2,  0}, GRASS);
+	addCube(vertices, indices, {0, -2, -1}, GRASS);
+	addCube(vertices, indices, {0, -2,  1}, GRASS);
+	addCube(vertices, indices, {0, -1, -2}, GRASS);
+	addCube(vertices, indices, {0, -1,  2}, GRASS);
 
 	VAO VAO1;
 	VAO1.Bind();
