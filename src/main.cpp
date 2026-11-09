@@ -15,15 +15,19 @@
 #include"../include/textures.h"
 #include"../include/TextRenderer.h"
 #include"../include/camera.h"
+#include"../include/Atlas.h"
+#include"../include/Block.h"
+#include"../include/MeshBuilder.h"
 
-const char *defaultVertPath = RES_PATH "/shaders/default.vert";
-const char *defaultFragPath = RES_PATH "/shaders/default.frag";
+const char *defaultVertPath		= RES_PATH "/shaders/default.vert";
+const char *defaultFragPath 	= RES_PATH "/shaders/default.frag";
 
-const char *textVertPath = RES_PATH "/shaders/text.vert";
-const char *textFragPath = RES_PATH "/shaders/text.frag";
+const char *textVertPath 		= RES_PATH "/shaders/text.vert";
+const char *textFragPath 		= RES_PATH "/shaders/text.frag";
 
-const char *grassTextPath 	= RES_PATH "/textures/grass_side.png";
-const char *fontPath     	= RES_PATH "/fonts/minecraft_font.ttf";
+const char *grassTextPath 		= RES_PATH "/textures/grass_side.png";
+const char *atlasPath 			= RES_PATH "/textures/atlas.png";
+const char *fontPath     		= RES_PATH "/fonts/minecraft_font.ttf";
 
 //Variables del programa
 
@@ -40,55 +44,6 @@ float deltaTime 		= 0.0f;
 float lastX = windowWidth/2, lastY = windowHeight/2;
 
 Camera camera = Camera(glm::vec3(5.0f, 0.0f, 0.0f));
-
-float vertices[] = {
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-};
-
-unsigned int indices[] = {
-	0, 1, 2,
-	0, 3, 2	
-};
 
 void key_callback(GLFWwindow *w, int key, int scancode, int action, int mods){
 	if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE){
@@ -113,8 +68,8 @@ void processInput(GLFWwindow *w, Camera *c){
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos){
     if (firstMouse){
-        lastX = 0;
-        lastY = 0;
+        lastX = xpos;
+        lastY = ypos;
         firstMouse = false;
     }
   
@@ -167,7 +122,7 @@ int main(){
 	glfwSwapInterval( 0 );
 
 	gladLoadGL();
-	glViewport(0, 0, 800, 800);
+	glViewport(0, 0, windowWidth, windowHeight);
 	glEnable(GL_DEPTH_TEST); 
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
@@ -176,19 +131,25 @@ int main(){
 
 	Shader shaderProgram(defaultVertPath, defaultFragPath);
 
+	std::vector<float> vertices;
+  	std::vector<unsigned int> indices;
+  	addCube(vertices, indices, {0, 0, 0}, GRASS);
+
 	VAO VAO1;
 	VAO1.Bind();
 
-	VBO VBO1(vertices, sizeof(vertices));
-	//EBO EBO1(indices, sizeof(indices));
+	VBO VBO1(vertices.data(), vertices.size() * sizeof(float));
+	EBO EBO1(indices.data(),  indices.size()  * sizeof(unsigned int));
 
 	VAO1.LinkVBO(VBO1, 0);
 
 	VAO1.Unbind();
 	VBO1.Unbind();
-	//EBO1.Unbind();
+	EBO1.Unbind();
 
 	Texture grassTexture("grassTexture", grassTextPath);
+	Texture atlas("atlas", atlasPath);
+
 	unsigned int tex0Uni = glGetUniformLocation(shaderProgram.ID, "tex0");
 	shaderProgram.use();
 	glUniform1i(tex0Uni, 0);
@@ -217,11 +178,11 @@ int main(){
 		glm::mat4  proj = glm::mat4(1.0f);
 
 		VAO1.Bind();
-		grassTexture.bind();
+		atlas.bind();
 
 		//model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
 		camera.view = glm::lookAt(camera.position, camera.position + camera.front, camera.up);
-		proj = glm::perspective(glm::radians(45.0f), float(windowWidth/windowHeight), 0.1f, 100.0f);
+		proj = glm::perspective(glm::radians(45.0f), (float)windowWidth/(float)windowHeight, 0.1f, 100.0f);
 
 		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -232,14 +193,15 @@ int main(){
 		int projLoc = glGetUniformLocation(shaderProgram.ID, "proj");
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
 
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
 
 		double currentTime = glfwGetTime();
 		frames++;
-		if(currentTime - lastTime >= 0.5){
-			fpsText = std::to_string(frames) + " FPS (" + std::to_string(1000.0 / frames).substr(0, 4) + " ms)";
-			frames = 0;
-			lastTime += 1;
+		double elapsed = currentTime - lastTime;
+		if (elapsed >= 0.5) {
+			double fps = frames / elapsed;
+			fpsText = std::format("{:.0f} FPS ({:.2f} ms)", fps, 1000.0 / fps);
+			frames = 0; lastTime = currentTime;
 		}
 
 		float currentFrame = glfwGetTime();
@@ -262,7 +224,7 @@ int main(){
 
 	VAO1.Delete();
 	VBO1.Delete();
-	//EBO1.Delete();
+	EBO1.Delete();
 
 	grassTexture.Delete();
 	text.Delete();

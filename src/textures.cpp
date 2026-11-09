@@ -9,6 +9,11 @@ Texture::Texture(std::string name, const char* texturePath){
 
     stbi_set_flip_vertically_on_load(true);
     bytes = stbi_load(texturePath, &width, &height, &numColCh, 0);
+
+    GLenum format = GL_RGB;
+    if(numColCh == 4)      format = GL_RGBA;
+    else if(numColCh == 1) format = GL_RGB;
+
     glGenTextures(1, &ID);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,  ID);
@@ -20,8 +25,9 @@ Texture::Texture(std::string name, const char* texturePath){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->width, this->height, 0, GL_RGB, GL_UNSIGNED_BYTE, bytes);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, bytes);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
     stbi_image_free(bytes);
     glBindTexture(GL_TEXTURE_2D, 0);

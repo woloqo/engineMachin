@@ -16,6 +16,9 @@ set(HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/include/textures.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/TextRenderer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/camera.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/Atlas.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/Block.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/MeshBuilder.h"
 )
 
 set(SOURCE
@@ -28,6 +31,9 @@ set(SOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/textures.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/TextRenderer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/camera.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Block.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/MeshBuilder.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE} ${HEADERS})
