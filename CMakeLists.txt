@@ -7,15 +7,15 @@ add_subdirectory(glm)
 find_package(Freetype REQUIRED)
 
 set(HEADERS 
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/shaderClass.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/ShaderClass.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/VAO.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/VBO.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/EBO.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/colors.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/Colors.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/stb_image.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/textures.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/Textures.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/TextRenderer.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/camera.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/Camera.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/Atlas.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/Block.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/MeshBuilder.h"
@@ -23,14 +23,14 @@ set(HEADERS
 
 set(SOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/shaderClass.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/ShaderClass.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/VAO.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/VBO.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/EBO.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/stb_image.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/textures.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Textures.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/TextRenderer.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/camera.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Camera.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Block.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/MeshBuilder.cpp"

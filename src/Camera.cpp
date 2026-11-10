@@ -1,4 +1,4 @@
-#include "../include/camera.h"
+#include "../include/Camera.h"
 
 Camera::Camera(glm::vec3 position){
     this->position  = position;

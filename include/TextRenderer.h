@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <map>
 #include <string>
-#include "shaderClass.h"
+#include "ShaderClass.h"
 
 struct Character {
     GLuint     textureID;  // textura del glifo

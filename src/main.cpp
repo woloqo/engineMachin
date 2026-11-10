@@ -7,14 +7,14 @@
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
-#include"../include/shaderClass.h"
+#include"../include/ShaderClass.h"
 #include"../include/VAO.h"
 #include"../include/VBO.h"
 #include"../include/EBO.h"
-#include"../include/colors.h"
-#include"../include/textures.h"
+#include"../include/Colors.h"
+#include"../include/Textures.h"
 #include"../include/TextRenderer.h"
-#include"../include/camera.h"
+#include"../include/Camera.h"
 #include"../include/Atlas.h"
 #include"../include/Block.h"
 #include"../include/MeshBuilder.h"
@@ -105,8 +105,8 @@ int main(){
 	glfwInit();
 	std::cout<<"engineMachin log:\n";
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, windowTitle, NULL, NULL);
@@ -156,7 +156,6 @@ int main(){
 	VBO1.Unbind();
 	EBO1.Unbind();
 
-	Texture grassTexture("grassTexture", grassTextPath);
 	Texture atlas("atlas", atlasPath);
 
 	unsigned int tex0Uni = glGetUniformLocation(shaderProgram.ID, "tex0");
@@ -235,7 +234,7 @@ int main(){
 	VBO1.Delete();
 	EBO1.Delete();
 
-	grassTexture.Delete();
+	atlas.Delete();
 	text.Delete();
 
 	shaderProgram.Delete();
