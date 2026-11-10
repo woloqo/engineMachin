@@ -24,6 +24,6 @@ void addFace(std::vector<float>& vertices,
 
 void addCube(std::vector<float>& vertices,
              std::vector<unsigned int>& indices,
-             glm::ivec3 blockPos, BlockType type);
+             glm::ivec3 blockPos, BlockType type, bool facesToDraw[6]);
 
 #endif

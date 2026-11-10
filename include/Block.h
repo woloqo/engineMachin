@@ -20,6 +20,8 @@ enum Face : uint8_t{
 enum BlockType : uint8_t{
     AIR,
     GRASS,
+    DIRT,
+    STONE,
     BLOCK_TYPE_COUNT
 };
 

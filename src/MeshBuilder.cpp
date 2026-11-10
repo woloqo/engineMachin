@@ -71,6 +71,8 @@ void addFace(std::vector<float>& vertices, std::vector<unsigned int>& indices, g
     indices.push_back(inicio + 3);
 }
              
-void addCube(std::vector<float>& vertices, std::vector<unsigned int>& indices, glm::ivec3 blockPos, BlockType type){
-    for (int f = 0; f < FACE_COUNT; f++) addFace(vertices, indices, blockPos, static_cast<Face>(f), type);
+void addCube(std::vector<float>& vertices, std::vector<unsigned int>& indices, glm::ivec3 blockPos, BlockType type, bool facesToDraw[6]){
+    for (int f = 0; f < FACE_COUNT; f++){
+        if(facesToDraw[f]) addFace(vertices, indices, blockPos, static_cast<Face>(f), type);
+    }
 }

@@ -44,7 +44,7 @@ bool constrainPitch		= true;
 float deltaTime 		= 0.0f;
 float lastX = windowWidth/2, lastY = windowHeight/2;
 
-Camera camera = Camera(glm::vec3(12.0f, 2.0f, 0.5f));
+Camera camera = Camera(glm::vec3(0.1f, 0.1f, 0.1f));
 
 void key_callback(GLFWwindow *w, int key, int scancode, int action, int mods){
 	if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE){
