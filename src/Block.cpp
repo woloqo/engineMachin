@@ -7,6 +7,7 @@ static constexpr int TILE_DIRT       = 2;
 
 //orden TOP, BOTTOM, NORTH, SOUTH, EAST, WEST
 static const BlockInfo blockTable[BLOCK_TYPE_COUNT] = {
+    {false},
     //GRASS
     { { TILE_GRASS_TOP, TILE_DIRT,
         TILE_GRASS_SIDE, TILE_GRASS_SIDE, TILE_GRASS_SIDE, TILE_GRASS_SIDE }, true },

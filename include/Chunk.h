@@ -1,0 +1,29 @@
+#ifndef CHUNK_H
+#define CHUNK_H
+
+#include<glad/glad.h>
+#include<GLFW/glfw3.h>
+#include<glm/glm.hpp>
+#include<glm/gtc/matrix_transform.hpp>
+#include<glm/gtc/type_ptr.hpp>
+#include<math.h>
+
+#include"../include/Block.h"
+#include"../include/MeshBuilder.h"
+
+
+struct Chunk{
+    int chunkId;
+    int xPos;
+    int yPos;
+    int zPos;
+    BlockType blocks[16][16][16];
+
+    Chunk();
+
+    void updateMesh(  std::vector<float>& vertices,
+                    std::vector<unsigned int>& indices);
+
+};
+
+#endif

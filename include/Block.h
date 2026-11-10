@@ -18,6 +18,7 @@ enum Face : uint8_t{
     FACE_COUNT
 };
 enum BlockType : uint8_t{
+    AIR,
     GRASS,
     BLOCK_TYPE_COUNT
 };

@@ -19,6 +19,7 @@ set(HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/include/Atlas.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/Block.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/MeshBuilder.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/Chunk.h"
 )
 
 set(SOURCE
@@ -34,6 +35,7 @@ set(SOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Block.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/MeshBuilder.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Chunk.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE} ${HEADERS})
