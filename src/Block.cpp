@@ -19,7 +19,7 @@ static const BlockInfo blockTable[BLOCK_TYPE_COUNT] = {
         TILE_DIRT, TILE_DIRT }, true },
     //STONE
     { { TILE_STONE, TILE_STONE,
-        TILE_STONE, TILE_DIRT, 
+        TILE_STONE, TILE_STONE, 
         TILE_STONE, TILE_STONE }, true },
 };
 

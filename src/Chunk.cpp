@@ -4,9 +4,9 @@ Chunk::Chunk(){
     for(int x = 0; x < 16; x++){
         for(int y = 0; y < 16; y++){
             for(int z = 0; z < 16; z++){
-                if(y == 15) this->blocks[x][y][z] = GRASS;
-                if(y <= 14 && y >= 13) this->blocks[x][y][z] = DIRT;
                 if(y <= 12) this->blocks[x][y][z] = STONE;
+                if(y <= 14 && y >= 13) this->blocks[x][y][z] = DIRT;
+                if(y == 15) this->blocks[x][y][z] = GRASS;
             }
         }
     }

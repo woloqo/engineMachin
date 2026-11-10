@@ -38,13 +38,14 @@ int windowWidth 		= 800;
 int windowHeight 		= 800;
 
 bool isDebugActive 		= true;
+bool isWireframeActive 	= false;
 bool firstMouse 		= true;
 bool constrainPitch		= true;
 
 float deltaTime 		= 0.0f;
 float lastX = windowWidth/2, lastY = windowHeight/2;
 
-Camera camera = Camera(glm::vec3(0.1f, 0.1f, 0.1f));
+Camera camera = Camera(glm::vec3(8.0f, 18.0f, 8.0f));
 
 void key_callback(GLFWwindow *w, int key, int scancode, int action, int mods){
 	if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE){
@@ -54,6 +55,13 @@ void key_callback(GLFWwindow *w, int key, int scancode, int action, int mods){
 	if(key == GLFW_KEY_F1 && action == GLFW_RELEASE){
 		std::cout<<"Debug toggled\n";
 		isDebugActive = isDebugActive ? 0 : 1;
+		glfwWaitEventsTimeout(0.7);
+	}
+	if(key == GLFW_KEY_F2 && action == GLFW_RELEASE){
+		std::cout<<"Wireframe toggled\n";
+		isWireframeActive = isWireframeActive ? 0 : 1;
+		if(isWireframeActive) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glfwWaitEventsTimeout(0.7);
 	}
 }
@@ -223,6 +231,7 @@ int main(){
 		lastFrame = currentFrame;  
 		
 		if(isDebugActive){
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			text.Draw(fpsText, 10.0f, windowHeight - 25.0f, 0.4f, glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);
 
 			std::string cameraText = "Camera pos: " + std::format("{:.2f}", camera.position.x) + ", " + std::format("{:.2f}", camera.position.y) + ", " + std::format("{:.2f}", camera.position.z);
@@ -230,6 +239,8 @@ int main(){
 
 			std::string viewText = "(looking at : " + std::format("{:.2f}", camera.front.x) + ", " + std::format("{:.2f}", camera.front.y) + ", " + std::format("{:.2f}", camera.front.z) + ")";
 			text.Draw(viewText, 5.0f, windowHeight - 65.0f, 0.35f, glm::vec3(0.0f, 0.0f, 0.0f), windowWidth, windowHeight);
+			if(isWireframeActive) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 
 		glfwSwapBuffers(window);
