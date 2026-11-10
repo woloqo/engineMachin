@@ -45,7 +45,7 @@ bool constrainPitch		= true;
 float deltaTime 		= 0.0f;
 float lastX = windowWidth/2, lastY = windowHeight/2;
 
-Camera camera = Camera(glm::vec3(8.0f, 18.0f, 8.0f));
+Camera camera = Camera(glm::vec3(8.0f, 18.0f, 8.0f), glm::vec3(0));
 
 void key_callback(GLFWwindow *w, int key, int scancode, int action, int mods){
 	if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE){
@@ -67,10 +67,20 @@ void key_callback(GLFWwindow *w, int key, int scancode, int action, int mods){
 }
 
 void processInput(GLFWwindow *w, Camera *c){
-	if(glfwGetKey(w, GLFW_KEY_W) == GLFW_PRESS) c->position += c->speed * c->front * deltaTime;
-	if(glfwGetKey(w, GLFW_KEY_S) == GLFW_PRESS) c->position -= c->speed * c->front * deltaTime;
-	if(glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS) c->position += glm::normalize(glm::cross(c->front, c->up)) * c->speed * deltaTime;
-	if(glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS) c->position -= glm::normalize(glm::cross(c->front, c->up)) * c->speed * deltaTime;
+	float currentSpeed = c->speed;
+	if(glfwGetKey(w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) currentSpeed *= 2.0f; // sprint = 2*speed
+
+	if(glfwGetKey(w, GLFW_KEY_W) == GLFW_PRESS){
+		c->position.x += currentSpeed * c->front.x * deltaTime;
+		c->position.z += currentSpeed * c->front.z * deltaTime;
+	}
+	if(glfwGetKey(w, GLFW_KEY_S) == GLFW_PRESS){
+		c->position.x -= currentSpeed * c->front.x * deltaTime;
+		c->position.z -= currentSpeed * c->front.z * deltaTime;
+	}
+	if(glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS) c->position += glm::normalize(glm::cross(c->front, c->up)) * currentSpeed * deltaTime;
+	if(glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS) c->position -= glm::normalize(glm::cross(c->front, c->up)) * currentSpeed * deltaTime;
+
 	if(glfwGetKey(w, GLFW_KEY_SPACE) == GLFW_PRESS) c->position.y += c->speed * deltaTime;
 	if(glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) c->position.y -= c->speed * deltaTime;
 }
@@ -188,6 +198,10 @@ int main(){
 
 	// Main loop
 	while (!glfwWindowShouldClose(window)){
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;  
+
 		glClearColor(COLOR_WHITE);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -204,7 +218,7 @@ int main(){
 
 		//model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
 		camera.view = glm::lookAt(camera.position, camera.position + camera.front, camera.up);
-		proj = glm::perspective(glm::radians(45.0f), (float)windowWidth/(float)windowHeight, 0.1f, 100.0f);
+		proj = glm::perspective(glm::radians(camera.fovInDegrees), (float)windowWidth/(float)windowHeight, 0.1f, 100.0f);
 
 		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -225,10 +239,6 @@ int main(){
 			fpsText = std::format("{:.0f} FPS ({:.2f} ms)", fps, 1000.0 / fps);
 			frames = 0; lastTime = currentTime;
 		}
-
-		float currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;  
 		
 		if(isDebugActive){
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

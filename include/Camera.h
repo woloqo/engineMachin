@@ -19,13 +19,17 @@ public:
 
     glm::mat4 view;
     
-    float speed;
+    float speed        = 10.0f;
+    float fovInDegrees = 90.0f;
+
+    const float fovInDegreesWhileRunning = fovInDegrees + 10.0f;
+    const float fovInDegreesWhileWalking = fovInDegrees;
 
     float yaw         = -90.0f;
     float pitch       =  0.0f;
     float sensitivity =  0.1f;
 
-    Camera(glm::vec3 position);
+    Camera(glm::vec3 position, glm::vec3 target);
 };
 
 #endif
