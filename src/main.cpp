@@ -34,8 +34,8 @@ const char *fontPath     		= RES_PATH "/fonts/minecraft_font.ttf";
 
 const char *windowTitle = "engineMachin";
 
-int windowWidth 		= 800;
-int windowHeight 		= 800;
+int windowWidth 		= 1280;
+int windowHeight 		= 720;
 
 bool isDebugActive 		= true;
 bool isWireframeActive 	= false;
@@ -68,18 +68,15 @@ void key_callback(GLFWwindow *w, int key, int scancode, int action, int mods){
 
 void processInput(GLFWwindow *w, Camera *c){
 	float currentSpeed = c->speed;
-	if(glfwGetKey(w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) currentSpeed *= 2.0f; // sprint = 2*speed
+	if(glfwGetKey(w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) currentSpeed *= 2.0f;
 
-	if(glfwGetKey(w, GLFW_KEY_W) == GLFW_PRESS){
-		c->position.x += currentSpeed * c->front.x * deltaTime;
-		c->position.z += currentSpeed * c->front.z * deltaTime;
-	}
-	if(glfwGetKey(w, GLFW_KEY_S) == GLFW_PRESS){
-		c->position.x -= currentSpeed * c->front.x * deltaTime;
-		c->position.z -= currentSpeed * c->front.z * deltaTime;
-	}
-	if(glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS) c->position += glm::normalize(glm::cross(c->front, c->up)) * currentSpeed * deltaTime;
-	if(glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS) c->position -= glm::normalize(glm::cross(c->front, c->up)) * currentSpeed * deltaTime;
+	glm::vec3 flatFront = glm::normalize(glm::vec3(c->front.x, 0.0f, c->front.z));
+	glm::vec3 right     = glm::normalize(glm::cross(c->front, c->up));
+
+	if(glfwGetKey(w, GLFW_KEY_W) == GLFW_PRESS) c->position += flatFront * currentSpeed * deltaTime;
+	if(glfwGetKey(w, GLFW_KEY_S) == GLFW_PRESS) c->position -= flatFront * currentSpeed * deltaTime;
+	if(glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS) c->position += right * currentSpeed * deltaTime;
+	if(glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS) c->position -= right * currentSpeed * deltaTime;
 
 	if(glfwGetKey(w, GLFW_KEY_SPACE) == GLFW_PRESS) c->position.y += c->speed * deltaTime;
 	if(glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) c->position.y -= c->speed * deltaTime;

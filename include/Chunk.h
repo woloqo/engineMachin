@@ -11,7 +11,6 @@
 #include"../include/Block.h"
 #include"../include/MeshBuilder.h"
 
-
 struct Chunk{
     int chunkId;
     int xPos;
@@ -24,6 +23,12 @@ struct Chunk{
     void updateMesh(  std::vector<float>& vertices,
                     std::vector<unsigned int>& indices);
 
+                    // Chunk.h
+    BlockType getBlock(int x, int y, int z) const;
+    void setBlock(int x, int y, int z, BlockType t);
+    static bool inBounds(int x, int y, int z){
+        return x>=0 && x<16 && y>=0 && y<16 && z>=0 && z<16;
+    }
 };
 
 #endif
