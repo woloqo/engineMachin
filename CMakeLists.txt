@@ -20,6 +20,8 @@ set(HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/include/Block.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/MeshBuilder.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/Chunk.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/World.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/Raycast.h"
 )
 
 set(SOURCE
@@ -36,6 +38,8 @@ set(SOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Block.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/MeshBuilder.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Chunk.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/World.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Raycast.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE} ${HEADERS})

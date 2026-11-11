@@ -1,6 +1,8 @@
 #include "../include/Chunk.h"
 
-Chunk::Chunk(){
+Chunk::Chunk(int id, glm::ivec3 pos){
+    this->id = id;
+    this->pos = pos;
     for(int x = 0; x < 16; x++){
         for(int y = 0; y < 16; y++){
             for(int z = 0; z < 16; z++){
@@ -10,6 +12,10 @@ Chunk::Chunk(){
             }
         }
     }
+}
+
+Chunk::Chunk(){
+
 }
 
 /*
@@ -46,8 +52,6 @@ void Chunk::setBlock(int x, int y, int z, BlockType t){
 }
 
 void Chunk::updateMesh(std::vector<float>& vertices, std::vector<unsigned int>& indices){
-    vertices.clear();
-    indices.clear();
     for(int x=0;x<16;x++) for(int y=0;y<16;y++) for(int z=0;z<16;z++){
         if(blocks[x][y][z] == AIR) continue;
         bool faces[6] = {
@@ -58,6 +62,6 @@ void Chunk::updateMesh(std::vector<float>& vertices, std::vector<unsigned int>& 
             getBlock(x+1,y,z) == AIR, // east
             getBlock(x-1,y,z) == AIR  // west
         };
-        addCube(vertices, indices, glm::ivec3(x, y, z), blocks[x][y][z], faces);
+        addCube(vertices, indices, glm::ivec3(x + this->pos.x, y + this->pos.y, z + this->pos.z), blocks[x][y][z], faces);
     }
 }

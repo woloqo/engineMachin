@@ -11,14 +11,15 @@
 #include"../include/Block.h"
 #include"../include/MeshBuilder.h"
 
+const int CHUNK_SIZE = 16;
+
 struct Chunk{
-    int chunkId;
-    int xPos;
-    int yPos;
-    int zPos;
-    BlockType blocks[16][16][16];
+    int id;
+    glm::ivec3 pos;
+    BlockType blocks[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
 
     Chunk();
+    Chunk(int id, glm::ivec3 pos);
 
     void updateMesh(  std::vector<float>& vertices,
                     std::vector<unsigned int>& indices);

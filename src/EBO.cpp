@@ -18,3 +18,8 @@ void EBO::Unbind(){
 void EBO::Delete(){
 	glDeleteBuffers(1, &ID);
 }
+
+void EBO::Update(GLuint* i, GLsizeiptr size){   // con el VAO ya bindeado
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, i, GL_STATIC_DRAW);
+}

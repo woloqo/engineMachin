@@ -19,6 +19,7 @@
 #include"../include/Block.h"
 #include"../include/MeshBuilder.h"
 #include"../include/Chunk.h"
+#include"../include/World.h"
 
 const char *defaultVertPath		= RES_PATH "/shaders/default.vert";
 const char *defaultFragPath 	= RES_PATH "/shaders/default.frag";
@@ -162,8 +163,7 @@ int main(){
 	addCube(vertices, indices, {0, -1,  2}, GRASS);
 	*/
 
-	Chunk chunk;
-	chunk.updateMesh(vertices, indices);
+	World wordl(3, vertices, indices);
 
 	VAO VAO1;
 	VAO1.Bind();
