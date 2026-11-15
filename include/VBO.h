@@ -6,8 +6,13 @@
 class VBO{
 public:
 	GLuint ID;
+
+	VBO();
 	VBO(GLfloat* vertices, GLsizeiptr size);
 
+	~VBO(){ Delete(); }
+
+	void Create();
 	void Bind();
 	void Unbind();
 	void Delete();

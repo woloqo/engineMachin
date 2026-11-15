@@ -8,27 +8,45 @@
 #include<glm/gtc/type_ptr.hpp>
 #include<math.h>
 
-#include"../include/Block.h"
-#include"../include/MeshBuilder.h"
+#include"Block.h"
+#include"MeshBuilder.h"
+#include"VAO.h"
+#include"VBO.h"
+#include"EBO.h"
 
-const int CHUNK_SIZE = 16;
+const int CHUNK_SIZE    = 16;
+const int CHUNK_HEIGHT  = 128;
+
+class World;
 
 struct Chunk{
+
     int id;
-    glm::ivec3 pos;
-    BlockType blocks[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
+    glm::ivec2 worldPos;
+    glm::ivec3 localPos;
+    BlockType blocks[CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
 
-    Chunk();
-    Chunk(int id, glm::ivec3 pos);
+    VAO vao;
+    VBO vbo;
+    EBO ebo;
+    GLsizei indexCount = 0;
+    bool meshCreated = false;
+    bool dirty = true;
 
-    void updateMesh(  std::vector<float>& vertices,
-                    std::vector<unsigned int>& indices);
+    Chunk(glm::ivec2 worldPos);
+
+    //void updateMesh(  std::vector<float>& vertices,
+    //                std::vector<unsigned int>& indices);
+    void generate();
+    void updateMesh(const World& world);
+    void draw();
+
 
                     // Chunk.h
     BlockType getBlock(int x, int y, int z) const;
     void setBlock(int x, int y, int z, BlockType t);
     static bool inBounds(int x, int y, int z){
-        return x>=0 && x<16 && y>=0 && y<16 && z>=0 && z<16;
+        return x>=0 && x<CHUNK_SIZE && y>=0 && y<CHUNK_HEIGHT && z>=0 && z<CHUNK_SIZE;
     }
 };
 

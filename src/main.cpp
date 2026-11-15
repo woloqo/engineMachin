@@ -1,5 +1,7 @@
 #include<string>
 #include<iostream>
+#include<memory>
+#include<format>
 
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -163,8 +165,9 @@ int main(){
 	addCube(vertices, indices, {0, -1,  2}, GRASS);
 	*/
 
-	World wordl(3, vertices, indices);
+	std::unique_ptr<World> world = std::make_unique<World>(5);
 
+	/*
 	VAO VAO1;
 	VAO1.Bind();
 
@@ -176,6 +179,7 @@ int main(){
 	VAO1.Unbind();
 	VBO1.Unbind();
 	EBO1.Unbind();
+	*/
 
 	Texture atlas("atlas", atlasPath);
 
@@ -210,7 +214,6 @@ int main(){
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4  proj = glm::mat4(1.0f);
 
-		VAO1.Bind();
 		atlas.bind();
 
 		//model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
@@ -226,7 +229,9 @@ int main(){
 		int projLoc = glGetUniformLocation(shaderProgram.ID, "proj");
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
 
-		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
+		//glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
+		world->update(4);
+		world->render();
 
 		double currentTime = glfwGetTime();
 		frames++;
@@ -254,12 +259,11 @@ int main(){
 		glfwPollEvents();
 	}
 
-	VAO1.Delete();
-	VBO1.Delete();
-	EBO1.Delete();
-
+	world.reset();
 	atlas.Delete();
 	text.Delete();
+
+	shaderProgram.Delete();
 
 	shaderProgram.Delete();
 

@@ -22,6 +22,7 @@ set(HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/include/Chunk.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/World.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/Raycast.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/FastNoise.h"
 )
 
 set(SOURCE
@@ -40,6 +41,7 @@ set(SOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Chunk.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/World.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Raycast.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/FastNoise.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE} ${HEADERS})

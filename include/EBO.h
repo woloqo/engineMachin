@@ -6,8 +6,13 @@
 class EBO{
 public:
 	GLuint ID;
+
+	EBO();
 	EBO(GLuint* indices, GLsizeiptr size);
 
+	~EBO(){ Delete(); }
+
+	void Create();
 	void Bind();
 	void Unbind();
 	void Delete();

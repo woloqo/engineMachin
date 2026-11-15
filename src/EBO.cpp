@@ -1,5 +1,11 @@
 #include"../include/EBO.h"
 
+EBO::EBO(){
+	glGenBuffers(1, &ID);
+}
+
+void EBO::Create(){ if(ID == 0) glGenBuffers(1, &ID); }
+
 EBO::EBO(GLuint* indices, GLsizeiptr size)
 {
 	glGenBuffers(1, &ID);

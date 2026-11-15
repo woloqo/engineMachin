@@ -76,3 +76,7 @@ void addCube(std::vector<float>& vertices, std::vector<unsigned int>& indices, g
         if(facesToDraw[f]) addFace(vertices, indices, blockPos, static_cast<Face>(f), type);
     }
 }
+
+void applyVertexFormat(VAO& vao, VBO& vbo){
+    for(const VertexAttrib& a : VERTEX_FORMAT) vao.LinkAttrib(vbo, a.layout, a.components, a.type, VERTEX_STRIDE, a.offset);
+}

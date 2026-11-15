@@ -1,5 +1,11 @@
 #include"../include/VBO.h"
 
+VBO::VBO(){
+	glGenBuffers(1, &ID);
+}
+
+void VBO::Create(){ if(ID == 0) glGenBuffers(1, &ID); }
+
 VBO::VBO(GLfloat* vertices, GLsizeiptr size){
 	glGenBuffers(1, &ID);
 	glBindBuffer(GL_ARRAY_BUFFER, ID);
